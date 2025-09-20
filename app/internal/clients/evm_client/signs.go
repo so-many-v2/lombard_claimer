@@ -75,5 +75,6 @@ func (ec *EVMClient) SendTransaction(toAddress common.Address, txData []byte) (c
 		return common.Hash{}, fmt.Errorf("error sending transaction: %s", err.Error())
 	}
 
+	time.Sleep(time.Second * time.Duration(ec.Config.SleepAfterTxDone))
 	return signedTx.Hash(), nil
 }

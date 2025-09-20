@@ -6,8 +6,9 @@ type GeneralConfig struct {
 }
 
 type EvmClientConfig struct {
-	GasMultiplier int64
-	SendTxTimeout int64
+	GasMultiplier    int64
+	SendTxTimeout    int64
+	SleepAfterTxDone int64
 }
 
 type ClaimLombardConfig struct {
@@ -27,11 +28,12 @@ func NewConfig() *Config {
 			WorkerPool:       5,
 		},
 		ClaimLombard: ClaimLombardConfig{
-			ChainName: "Ethereum",
+			ChainName: "Base",
 		},
 		EvmClient: EvmClientConfig{
-			GasMultiplier: 115,
-			SendTxTimeout: 30,
+			GasMultiplier:    115,
+			SendTxTimeout:    30,
+			SleepAfterTxDone: 5,
 		},
 	}
 }

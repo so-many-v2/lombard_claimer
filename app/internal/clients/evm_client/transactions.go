@@ -7,45 +7,46 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (ec *EVMClient) Approve(tokenAddress, spenderAddress, abiStr string, amount int64) error {
+func (ec *EVMClient) Approve(tokenAddress, spenderAddress, abiStr string, amount *big.Int) error {
 
-	tokenAddressHex := common.HexToAddress(tokenAddress)
-	spenderAddressHex := common.HexToAddress(spenderAddress)
-
-	decimalsResp, err := ec.CallContract(
-		tokenAddress,
-		abiStr,
-		"decimals",
-	)
-
-	if err != nil {
-		return fmt.Errorf("error getting decimals: %s", err.Error())
-	}
-
-	intDecimals, ok := decimalsResp.([]interface{})[0].(uint8)
-	if !ok {
-		return fmt.Errorf("error get int64 from decimal interface: %s", fmt.Errorf("error type decimal switch"))
-	}
-
-	regularAmount := big.NewInt(amount)
-	weiMul := new(big.Int).Exp(big.NewInt(10), big.NewInt(int64(intDecimals)), nil)
-	weiAmount := new(big.Int).Mul(regularAmount, weiMul)
+	taAddress := common.HexToAddress(tokenAddress)
+	sa := common.HexToAddress(spenderAddress)
 
 	contractAbi, err := ec.GetAbi(abiStr)
 	if err != nil {
 		return err
 	}
 
-	txData, err := contractAbi.Pack("approve", spenderAddressHex, weiAmount)
+	txData, err := contractAbi.Pack("approve", sa, amount)
 	if err != nil {
 		return fmt.Errorf("error getting txData: %s", err.Error())
 	}
 
-	txHash, err := ec.SendTransaction(tokenAddressHex, txData)
+	txHash, err := ec.SendTransaction(taAddress, txData)
 	if err != nil {
 		return fmt.Errorf("%s", err.Error())
 	}
 
-	fmt.Printf("Make approve | Tx Hash: %sending", txHash.String())
+	fmt.Printf("Made approve | Tx Hash: %s\n", txHash.String())
+	return nil
+}
+
+func (ec *EVMClient) CheckAllowance(tokenAddress, spender, tokenAbi string, amount *big.Int) error {
+
+	allowance, err := ec.GetAllowance(tokenAddress, spender, tokenAbi)
+	if err != nil {
+		return err
+	}
+
+	if allowance.Cmp(amount) == -1 {
+		err = ec.Approve(tokenAddress, spender, tokenAbi, new(big.Int).Mul(amount, big.NewInt(2)))
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+
+	fmt.Println("Enough allowance for transaction")
+
 	return nil
 }

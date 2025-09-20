@@ -1,4 +1,4 @@
-package contractabis
+package lombardabi
 
 var LOMBARD_CLAIM_ABI string = `[
    {

@@ -87,6 +87,28 @@ func (ec *EVMClient) GetBalanceOf(tokenAddress, tokenAbi string) (*big.Int, erro
 	return decimals, nil
 }
 
+func (ec *EVMClient) GetAllowance(tokenAddress, spenderAddress, tokenAbi string) (*big.Int, error) {
+
+	amount, err := ec.CallContract(
+		tokenAddress,
+		tokenAbi,
+		"allowance",
+		ec.Wallet.Address,
+		common.HexToAddress(spenderAddress),
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	intAmount, ok := amount.(*big.Int)
+	if !ok {
+		return nil, fmt.Errorf("cant parse allowance amount to *Big.Int")
+	}
+
+	return intAmount, nil
+}
+
 func (ec *EVMClient) GetNativeBalance() (*big.Int, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(ec.Config.SendTxTimeout))

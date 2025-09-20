@@ -5,13 +5,16 @@ import "fmt"
 func GetTokens(chainName string) (map[string]string, error) {
 	data := map[string]map[string]string{
 		"Base": map[string]string{
-			"USDC": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-			"BARD": "",
+			"USDC":  "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+			"BARD":  "",
+			"LBTCv": "0x5401b8620E5FB570064CA9114fd1e135fd77D57c",
 		},
 		"Ethereum": map[string]string{
-			"USDC": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-			"USDT": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-			"BARD": "0xf0DB65D17e30a966C2ae6A21f6BBA71cea6e9754",
+			"USDC":  "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+			"USDT":  "0xdac17f958d2ee523a2206206994597c13d831ec7",
+			"BARD":  "0xf0DB65D17e30a966C2ae6A21f6BBA71cea6e9754",
+			"LBTCv": "0x5401b8620E5FB570064CA9114fd1e135fd77D57c",
+			"LBTC":  "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
 		},
 		"BSC": map[string]string{
 			"USDC": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",

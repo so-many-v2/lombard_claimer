@@ -6,15 +6,17 @@ import (
 )
 
 type Lombard struct {
-	evmClient        *evmclient.EVMClient
-	httpClient       *httpclient.HttpClient
-	BaseVaultAddress string
-	BscVaultAddress  string
+	evmClient    *evmclient.EVMClient
+	httpClient   *httpclient.HttpClient
+	VaultAddress string
+	LBTCvAddress string
 }
 
-func NewLombard(evmClient *evmclient.EVMClient, httpClient *httpclient.HttpClient) *Lombard {
+func NewLombard(evmClient *evmclient.EVMClient, httpClient *httpclient.HttpClient, va, la string) *Lombard {
 	return &Lombard{
-		evmClient:  evmClient,
-		httpClient: httpClient,
+		evmClient:    evmClient,
+		httpClient:   httpClient,
+		VaultAddress: va,
+		LBTCvAddress: la,
 	}
 }

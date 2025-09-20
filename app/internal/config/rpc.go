@@ -6,7 +6,7 @@ func GetProvider(chanName string) (string, error) {
 
 	providers := map[string]string{
 		"Ethereum": "https://eth.llamarpc.com",
-		"Base":     "https://base-rpc.publicnode.com",
+		"Base":     "https://rpc.ankr.com/base/a08b52a16806752b7cce3d78aec157bd12c176474abea1e32d2683b74ed57638",
 		"Bsc":      "https://base.llamarpc.com",
 	}
 
