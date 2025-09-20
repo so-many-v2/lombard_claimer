@@ -14,9 +14,9 @@ type Wallet struct {
 	Address    common.Address
 }
 
-func NewWallet(privatKey string) (*Wallet, error) {
+func NewWallet(privateKey string) (*Wallet, error) {
 
-	pk, err := crypto.HexToECDSA(privatKey)
+	pk, err := crypto.HexToECDSA(privateKey)
 	if err != nil {
 		return nil, fmt.Errorf("error decode privat key: %s", err.Error())
 	}

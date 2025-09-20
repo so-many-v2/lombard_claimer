@@ -1,7 +1,13 @@
 package config
 
-type CommonConfig struct {
-	ResidentalProxy string
+type GeneralConfig struct {
+	ResidentialProxy string
+	WorkerPool       int64
+}
+
+type EvmClientConfig struct {
+	GasMultiplier int64
+	SendTxTimeout int64
 }
 
 type ClaimLombardConfig struct {
@@ -9,17 +15,23 @@ type ClaimLombardConfig struct {
 }
 
 type Config struct {
-	Common       CommonConfig
+	General      GeneralConfig
 	ClaimLombard ClaimLombardConfig
+	EvmClient    EvmClientConfig
 }
 
 func NewConfig() *Config {
 	return &Config{
-		Common: CommonConfig{
-			ResidentalProxy: "", // Your resedental proxy
+		General: GeneralConfig{
+			ResidentialProxy: "", // Your resedental proxy
+			WorkerPool:       5,
 		},
 		ClaimLombard: ClaimLombardConfig{
 			ChainName: "Ethereum",
+		},
+		EvmClient: EvmClientConfig{
+			GasMultiplier: 115,
+			SendTxTimeout: 30,
 		},
 	}
 }

@@ -2,7 +2,7 @@ package filereader
 
 import (
 	"bufio"
-	"log"
+	"fmt"
 	"os"
 )
 
@@ -12,15 +12,21 @@ func NewFileReader() *FileReader {
 	return &FileReader{}
 }
 
-func (fr *FileReader) ScanFile(path string) *bufio.Scanner {
+func (fr *FileReader) ScanFile(path string) ([]string, error) {
 
 	file, err := os.Open(path)
 
 	if err != nil {
-		log.Fatalf("error getting wallets from %s : %s", path, err.Error())
+		return nil, fmt.Errorf("error getting wallets from %s : %s", path, err.Error())
 	}
 
 	scanner := bufio.NewScanner(file)
 
-	return scanner
+	output := []string{}
+
+	for scanner.Scan() {
+		output = append(output, scanner.Text())
+	}
+
+	return output, nil
 }

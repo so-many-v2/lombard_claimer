@@ -1,28 +1,23 @@
 package app
 
 import (
-	"context"
 	"fmt"
 	"log"
 	evmclient "lombardClaimer/internal/clients/evm_client"
-	httpclient "lombardClaimer/internal/clients/http_client"
 	"lombardClaimer/internal/config"
 	abis "lombardClaimer/internal/config/contract_abis"
-	"lombardClaimer/internal/modules"
 	fr "lombardClaimer/pkg/fileReader"
 
 	"github.com/ethereum/go-ethereum/common"
 )
 
-var LOMBARD_CLAIM_ADDRESS string = "0x6fF742845D45d29cb38fa075EFc889247A52Eb02"
-
-func ClaimLombard() {
+func TestScript() {
 
 	conf := config.NewConfig()
 	reader := fr.NewFileReader()
 
 	wallets, err := reader.ScanFile("data/wallets.txt")
-	err != nil {
+	if err != nil {
 		log.Fatal(err.Error())
 	}
 
@@ -31,19 +26,18 @@ func ClaimLombard() {
 		log.Fatal(err.Error())
 	}
 
-	// tokens, err := config.GetTokens(conf.ClaimLombard.ChainName)
-	// if err != nil {
-	// 	log.Fatal(err.Error())
-	// }
+	tokens, err := config.GetTokens(conf.ClaimLombard.ChainName)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
-	httpClient, err := httpclient.NewFetcher(conf.Common.ResidentalProxy)
-
-	for wallets.Scan() {
+	for _, key := range wallets {
 
 		evmClient, err := evmclient.NewEVMClient(
 			conf.ClaimLombard.ChainName,
 			provider,
-			wallets.Text(),
+			key,
+			config.NewConfig().EvmClient,
 		)
 
 		if err != nil {
@@ -51,10 +45,19 @@ func ClaimLombard() {
 			continue
 		}
 
-		lombard := modules.NewLombard(evmClient, httpClient)
+		response, err := evmClient.CallContract(
+			tokens["USDC"],
+			abis.ERC20_ABI,
+			"balanceOf",
+			common.HexToAddress("0x11a0f7449c4E1cB3200bC63Ce4E75f4859205230"),
+		)
 
-		err := lombard.ClaimAllocation()
+		if err != nil {
+			fmt.Printf("error gating balance USDC: %v | %s\n", evmClient.Wallet.Address, err.Error())
+			continue
+		}
 
+		fmt.Printf("USDC Balance: %v\n", response)
 	}
 
 }

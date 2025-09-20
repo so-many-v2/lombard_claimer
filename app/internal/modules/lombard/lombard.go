@@ -1,15 +1,15 @@
-package modules
+package lombard
 
 import (
 	evmclient "lombardClaimer/internal/clients/evm_client"
 	httpclient "lombardClaimer/internal/clients/http_client"
-
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type Lombard struct {
-	evmClient  *evmclient.EVMClient
-	httpClient *httpclient.HttpClient
+	evmClient        *evmclient.EVMClient
+	httpClient       *httpclient.HttpClient
+	BaseVaultAddress string
+	BscVaultAddress  string
 }
 
 func NewLombard(evmClient *evmclient.EVMClient, httpClient *httpclient.HttpClient) *Lombard {
@@ -17,10 +17,4 @@ func NewLombard(evmClient *evmclient.EVMClient, httpClient *httpclient.HttpClien
 		evmClient:  evmClient,
 		httpClient: httpClient,
 	}
-}
-
-func (l *Lombard) ClaimAllocation(contractAddress, contractAbi string) error {
-
-	caHex := common.HexToAddress(contractAddress)
-
 }
