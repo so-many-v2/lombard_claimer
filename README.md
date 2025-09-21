@@ -1,77 +1,77 @@
 # Lombard Claimer & Sender
 
-## 📌 Описание
+## 📌 Description
 
-Данный софт предназначен для **клейма токенов с Lombard** и их **отправки на депозитные адреса**.
-Поддерживается три основных режима работы:
+This software is designed for **claiming tokens from Lombard** and **sending them to deposit addresses**.
+It supports three main modes of operation:
 
-* **Claim** — получение аллокации с Lombard.
-* **Withdraw** — вывод токенов из vault.
-* **CheckBalance** — проверка баланса кошельков на наличие BARD токенов.
+* **Claim** — claim allocation from Lombard.
+* **Withdraw** — withdraw tokens from the vault.
+* **CheckBalance** — check wallet balances for BARD tokens.
 
 ---
 
-## ⚙️ Подготовка
+## ⚙️ Setup
 
-1. **Склонировать репозиторий:**
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/so-many-v2/lombard_claimer.git
    ```
 
-2. **Заполнить входные данные:**
+2. **Fill in the input data:**
 
-   * `data/wallets.txt` — приватные ключи кошельков (каждый с новой строки).
-   * `data/deposit_addresses.txt` — депозитные адреса для отправки токенов.
+   * `data/wallets.txt` — private keys of wallets (one per line).
+   * `data/deposit_addresses.txt` — deposit addresses for sending tokens.
 
-3. **Настроить конфиг:**
-   В файле `config.go` выставить параметр:
+3. **Configure settings:**
+   In the `config.go` file, set the parameter:
 
    ```go
-   SendTokensAfterClaim = true  // если нужно сразу отправлять токены на депозитные адреса
-   SendTokensAfterClaim = false // если только клеймим без отправки
+   SendTokensAfterClaim = true  // if you want to automatically send tokens to deposit addresses after claiming
+   SendTokensAfterClaim = false // if you only want to claim without sending
    ```
 
 ---
 
-## 🚀 Запуск
+## 🚀 Run
 
-Перейти в папку **app**:
+Navigate to the **app** folder:
 
 ```bash
 cd app
 ```
 
-Доступные команды (через `make`):
+Available commands (via `make`):
 
-* **Вывод токенов (Withdraw):**
+* **Withdraw tokens (Withdraw):**
 
   ```bash
   make withdraw
   ```
 
-  > Запускает `cmd/withdraw/main.go`
+  > Runs `cmd/withdraw/main.go`
 
-* **Проверка баланса (CheckBalance):**
+* **Check wallet balance (CheckBalance):**
 
   ```bash
   make checkBalance
   ```
 
-  > Запускает `cmd/checkBalance/main.go`
+  > Runs `cmd/checkBalance/main.go`
 
-* **Клейм токенов (Claim):**
+* **Claim tokens (Claim):**
 
   ```bash
   make claim
   ```
 
-  > Запускает `cmd/claim/main.go`
+  > Runs `cmd/claim/main.go`
 
 ---
 
-## 📝 Примечания
+## 📝 Notes
 
-* Все приватники и адреса должны быть корректными и соответствовать сети, указанной в `config.go`.
-* Если включен режим `SendTokensAfterClaim = true`, токены автоматически отправятся на депозитные адреса сразу после успешного клейма.
+* All private keys and addresses must be correct and correspond to the network specified in `config.go`.
+* If `SendTokensAfterClaim = true` is enabled, tokens will be automatically sent to deposit addresses right after a successful claim.
 
