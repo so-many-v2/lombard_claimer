@@ -12,7 +12,8 @@ type EvmClientConfig struct {
 }
 
 type ClaimLombardConfig struct {
-	ChainName string
+	ChainName            string
+	SendTokensAfterClaim bool
 }
 
 type Config struct {
@@ -28,7 +29,8 @@ func NewConfig() *Config {
 			WorkerPool:       5,
 		},
 		ClaimLombard: ClaimLombardConfig{
-			ChainName: "Base",
+			ChainName:            "Base",
+			SendTokensAfterClaim: true,
 		},
 		EvmClient: EvmClientConfig{
 			GasMultiplier:    115,

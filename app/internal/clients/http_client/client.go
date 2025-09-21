@@ -53,7 +53,7 @@ func (f *HttpClient) Get(url string, headers map[string]string) (*http.Response,
 	return resp, nil
 }
 
-func (f *HttpClient) Post(url string, headers map[string]string, payload map[string]any) (*http.Response, error) {
+func (f *HttpClient) Post(url string, headers map[string]string, payload interface{}) (*http.Response, error) {
 
 	body, err := json.Marshal(payload)
 

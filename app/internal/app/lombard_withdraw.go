@@ -11,8 +11,6 @@ import (
 	"sync"
 )
 
-var LOMBARD_CLAIM_ADDRESS string = "0x6fF742845D45d29cb38fa075EFc889247A52Eb02"
-
 var LOMBARD_VAULT_ADDRESSES = map[string]string{
 	"Base":     "0x3b4acd8879fb60586ccd74bc2f831a4c5e7dbbf8",
 	"Ethereum": "",
