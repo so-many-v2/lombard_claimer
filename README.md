@@ -16,7 +16,7 @@
 1. **Склонировать репозиторий:**
 
    ```bash
-   git clone https://github.com/so-many-v2/lombard_claimer
+   git clone https://github.com/so-many-v2/lombard_claimer.git
    ```
 
 2. **Заполнить входные данные:**
